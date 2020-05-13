@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AfpaTinderCore.Data;
-using AfpaTinderCore.Models;
+using AfpaTinderCore.Data.Models;
 
 namespace AfpaTinderCore.Controllers
 {

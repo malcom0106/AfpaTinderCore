@@ -26,11 +26,14 @@ namespace AfpaTinderCore
         {
             services.AddControllersWithViews();
 
-            string connexionString = Configuration.GetConnectionString("MaBDD");
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connexionString));
+            //services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("MaBDD")));
+            
+            services.AddTransient<DataPersonne>();
 
-            services.AddTransient<Data.DataPersonne>();
-
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(5);
+                options.Cookie.HttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +47,8 @@ namespace AfpaTinderCore
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseSession();
+
             app.UseStaticFiles();
 
             app.UseRouting();

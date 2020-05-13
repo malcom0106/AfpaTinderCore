@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AfpaTinderCore.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using AfpaTinderCore.Models;
 
 namespace AfpaTinderCore.Controllers
 {
@@ -20,6 +21,8 @@ namespace AfpaTinderCore.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Session.SetString("toto", "tata");
+            HttpContext.Session.GetString("toto");
             return View();
         }
 
@@ -31,7 +34,7 @@ namespace AfpaTinderCore.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }

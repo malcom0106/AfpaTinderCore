@@ -13,8 +13,10 @@ namespace AfpaTinderCore.Data.Models
         [StringLength(100)]
         public string Nom { get; set; }
         public List<PersonneLoisir> PersonneLoisirs { get; set; }
+
         [InverseProperty("Personne")]
         public List<Favori> Favoris { get; set; }
+
         public Allure Allure { get; set; }
         public OrientationSexuelle OrientationSexuelle { get; set; }
         public TypeRelation TypeRelation { get; set; }
