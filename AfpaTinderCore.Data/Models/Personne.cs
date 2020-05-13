@@ -11,10 +11,10 @@ namespace AfpaTinderCore.Data.Models
     {
         public int Id { get; set; }
         [StringLength(100)]
-        [Required]
+        [Required(ErrorMessage = "Saisir votre nom")]
         public string Nom { get; set; }
 
-        [StringLength(50)]
+        [StringLength(50,ErrorMessage ="Caracteres Maxi : 50")]
         [Required]
         public string Prenom { get; set; }
 

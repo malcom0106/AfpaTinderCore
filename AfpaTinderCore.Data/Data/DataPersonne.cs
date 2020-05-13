@@ -1,4 +1,5 @@
 ﻿using AfpaTinderCore.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,18 @@ namespace AfpaTinderCore.Data
         public List<Personne> GetPersonnes()
         {
             return (_context.Personnes.ToList());
+        }
+
+        public async Task<Personne> GetPersonneConnexion(string login, string pwd)
+        {
+            try
+            {
+                return await _context.Personnes.Where(p => p.Login == login && p.Password == pwd).FirstOrDefaultAsync();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

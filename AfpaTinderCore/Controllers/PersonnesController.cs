@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AfpaTinderCore.Data;
 using AfpaTinderCore.Data.Models;
+using AfpaTinderCore.Models;
 
 namespace AfpaTinderCore.Controllers
 {
     public class PersonnesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly DataPersonne _dataPersonne;
 
-        public PersonnesController(ApplicationDbContext context)
+        public PersonnesController(ApplicationDbContext context, DataPersonne dataPersonne)
         {
             _context = context;
+            _dataPersonne = dataPersonne;
         }
 
         // GET: Personnes
@@ -50,8 +53,6 @@ namespace AfpaTinderCore.Controllers
         }
 
         // POST: Personnes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nom,Prenom,Email,Login,Password,Telephone,Statut,Age,Enfants,Latitude,Longitude,IsGeoloc,IsAppliMobile")] Personne personne)
@@ -143,6 +144,36 @@ namespace AfpaTinderCore.Controllers
             _context.Personnes.Remove(personne);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+
+        // GET: Personnes/Create
+        public IActionResult Connexion()
+        {
+            return View();
+        }
+
+        // POST: Personnes/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Connexion([Bind("Login, Password")] ConnexionModelView connexion)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Personne personne = await _dataPersonne.GetPersonneConnexion(connexion.Login, connexion.Password);
+                    if(personne != null)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                catch(Exception ex)
+                {
+                    ViewBag.message = ex.Message;
+                }
+            }
+            return View();
         }
 
         private bool PersonneExists(int id)
