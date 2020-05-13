@@ -26,7 +26,7 @@ namespace AfpaTinderCore
         {
             services.AddControllersWithViews();
 
-            //services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("MaBDD")));
+            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("MaBDD")));
             
             services.AddTransient<DataPersonne>();
 

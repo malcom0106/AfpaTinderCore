@@ -11,7 +11,37 @@ namespace AfpaTinderCore.Data.Models
     {
         public int Id { get; set; }
         [StringLength(100)]
+        [Required]
         public string Nom { get; set; }
+
+        [StringLength(50)]
+        [Required]
+        public string Prenom { get; set; }
+
+        [StringLength(100)]
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+        [StringLength(50)]
+        [Required]
+        public string Login { get; set; }
+        [MaxLength(50)]
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+        [StringLength(10)]
+        public string Telephone { get; set; }
+        public bool Statut { get; set; }
+        [Required]
+        public int Age { get; set; }
+        public int Enfants { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
+        [Required]
+        public bool IsGeoloc { get; set; }
+
+        public bool IsAppliMobile { get; set; }
         public List<PersonneLoisir> PersonneLoisirs { get; set; }
 
         [InverseProperty("Personne")]

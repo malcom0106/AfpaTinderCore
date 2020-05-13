@@ -13,18 +13,16 @@ namespace AfpaTinderCore.Controllers
     public class PersonnesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly DataPersonne _dataPersonne;
 
-        public PersonnesController(ApplicationDbContext context, DataPersonne dataPersonne)
+        public PersonnesController(ApplicationDbContext context)
         {
             _context = context;
-            _dataPersonne = dataPersonne;
         }
 
         // GET: Personnes
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_dataPersonne.GetPersonnes());
+            return View(await _context.Personnes.ToListAsync());
         }
 
         // GET: Personnes/Details/5
@@ -56,7 +54,7 @@ namespace AfpaTinderCore.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nom")] Personne personne)
+        public async Task<IActionResult> Create([Bind("Id,Nom,Prenom,Email,Login,Password,Telephone,Statut,Age,Enfants,Latitude,Longitude,IsGeoloc,IsAppliMobile")] Personne personne)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +86,7 @@ namespace AfpaTinderCore.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nom")] Personne personne)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nom,Prenom,Email,Login,Password,Telephone,Statut,Age,Enfants,Latitude,Longitude,IsGeoloc,IsAppliMobile")] Personne personne)
         {
             if (id != personne.Id)
             {
